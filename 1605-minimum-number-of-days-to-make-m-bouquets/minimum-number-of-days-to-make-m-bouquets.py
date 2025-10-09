@@ -4,25 +4,23 @@ class Solution:
         n = m * k
         if n > len(bloomDay):
             return -1
-        def make_bouquets(bloomDay, m, k, day):
-            total = 0
-            flowers = 0
-            for b in bloomDay:
-                if b <= day:
-                    flowers += 1
-                    if flowers == k:
-                        total += 1
-                        flowers = 0
-                else:
-                    flowers = 0
-                
-                if total >= m:
-                    return True
-            return False
-
+        flowers, bouquets = 0, 0
         while l <= r:
             mid = (l + r) // 2
-            if make_bouquets(bloomDay, m ,k, mid):
+            flowers, bouquets = 0, 0
+            for day in bloomDay:
+                if mid >= day:
+                    flowers += 1
+                else:
+                    flowers = 0
+
+                if flowers >= k:
+                    bouquets += 1
+                    flowers = 0
+                    if bouquets == m:
+                        break
+            
+            if bouquets == m:
                 r = mid - 1
             else:
                 l = mid + 1
